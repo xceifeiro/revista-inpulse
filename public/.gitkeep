@@ -1,0 +1,1 @@
+echo "# Arquivo de marcador para manter a pasta public no repositório" > public/.gitkeep
