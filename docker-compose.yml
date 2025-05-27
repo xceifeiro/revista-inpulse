@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  revista-inpulse:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - TEAM_EMAIL=${TEAM_EMAIL}
+    env_file:
+      - .env.local
+    restart: unless-stopped
+    networks:
+      - revista-network
+
+networks:
+  revista-network:
+    driver: bridge
+
+# Para desenvolvimento
+---
+version: '3.8'
+
+services:
+  revista-inpulse-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      target: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
+    env_file:
+      - .env.local
+    restart: unless-stopped
+    networks:
+      - revista-network-dev
+
+networks:
+  revista-network-dev:
+    driver: bridge
