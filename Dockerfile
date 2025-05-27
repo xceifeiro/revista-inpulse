@@ -21,6 +21,7 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+COPY public ./public
 
 # Variáveis de ambiente para build
 ENV NEXT_TELEMETRY_DISABLED 1
@@ -64,3 +65,4 @@ ENV HOSTNAME "0.0.0.0"
 
 # Comando para iniciar a aplicação
 CMD ["node", "server.js"]
+
